@@ -15,64 +15,87 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Repo Paths Section -->
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10">
-            <Label Content="Repo Paths" FontWeight="Bold" Margin="2,2,2,2"/>
-            <ListBox x:Name="RepoPathsListBox" ItemsSource="{Binding RepoPaths}" Height="100" Margin="2,2,2,2">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding RepoPath}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
-                <TextBox Width="300" x:Name="RepoPathBox" Margin="2,2,2,2"/>
-                <Button Width="60" Margin="2,2,2,2" Click="OnAddRepoPathClick">
-                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="➕ Add"/>
-                </Button>
-                <Button Width="70" Margin="2,2,2,2" Click="OnRemoveRepoPathClick">
-                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🗑️ Remove"/>
-                </Button>
-                <Button Width="100" Margin="2,2,2,2" Click="OnClearAllRepoPathsClick">
-                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🚫 Clear All"/>
-                </Button>
-            </StackPanel>
-            <!-- Load Repo Paths from CSV -->
-            <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
-                <ComboBox x:Name="RepoSourceComboBox" Width="300" Margin="2,2,2,2" 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition  Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <!-- Repo Paths Section -->
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10">
+                <Label Content="Repo Paths" FontWeight="Bold" Margin="2,2,2,2"/>
+                <ListBox x:Name="RepoPathsListBox" ItemsSource="{Binding RepoPaths}" Height="100" Margin="2,2,2,2">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FullPath}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                    <TextBox Width="300" x:Name="RepoPathBox" Margin="2,2,2,2"/>
+                    <Button Width="60" Margin="2,2,2,2" Click="OnAddRepoPathClick">
+                        <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="➕ Add"/>
+                    </Button>
+                    <Button Width="70" Margin="2,2,2,2" Click="OnRemoveRepoPathClick">
+                        <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🗑️ Remove"/>
+                    </Button>
+                    <Button Width="100" Margin="2,2,2,2" Click="OnClearAllRepoPathsClick">
+                        <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🚫 Clear All"/>
+                    </Button>
+                </StackPanel>
+                <!-- Load Repo Paths from CSV -->
+                <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                    <ComboBox x:Name="RepoSourceComboBox" Width="300" Margin="2,2,2,2" 
                           ItemsSource="{Binding RepoSources}" DisplayMemberPath="FileName"/>
-                <Button Width="60" Margin="2,2,2,2" Click="OnLoadRepoPathsClick">
+                    <Button Width="60" Margin="2,2,2,2" Click="OnLoadRepoPathsClick">
+                        <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="📂 Load"/>
+                    </Button>
+                </StackPanel>
+
+                <!-- Mass Edit Repo Paths -->
+                <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                    <TextBox Width="300" x:Name="MassEditFolderBox" Margin="2,2,2,2" 
+                         ToolTip="Enter a folder name to append to all repo paths"/>
+                    <Button Width="100" Margin="2,2,2,2" Click="OnMassEditRepoPathsClick">
+                        <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="📝 Mass Append"/>
+                    </Button>
+                    <Button Width="100" Margin="2,2,2,2" Click="OnUndoMassAppendClick">
+                        <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="↩️ Undo"/>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel  Orientation="Vertical" Margin="10" Grid.Column="1" HorizontalAlignment="Right">
+                <Label Content="Templates" FontWeight="Bold" Margin="2,2,2,2"/>
+                <ComboBox x:Name="TemplateComboBox" Width="200" Height="25" Margin="2,2,2,2"
+              ItemsSource="{Binding Templates}" DisplayMemberPath="Name" SelectedValue="{Binding SelectedTemplate}"/>
+                <Button Width="200" Height="25" Margin="2,2,2,2" Click="OnSaveTemplateClick">
+                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="💾 Save"/>
+                </Button>
+                <Button Width="200" Height="25" Margin="2,2,2,2" Click="OnLoadTemplateClick">
                     <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="📂 Load"/>
                 </Button>
-            </StackPanel>
-
-            <!-- Mass Edit Repo Paths -->
-            <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
-                <TextBox Width="300" x:Name="MassEditFolderBox" Margin="2,2,2,2" 
-                         ToolTip="Enter a folder name to append to all repo paths"/>
-                <Button Width="100" Margin="2,2,2,2" Click="OnMassEditRepoPathsClick">
-                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="📝 Mass Append"/>
+                <Button Width="200" Height="25" Margin="2,2,2,2" Click="OnDeleteTemplateClick">
+                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🗑️ Delete"/>
                 </Button>
             </StackPanel>
-        </StackPanel>
+        </Grid>
 
         <!-- Search Bar -->
         <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="10,2,2,2" Grid.Row="1">
             <Label Content="File Filter (ex: *.txt, *.xml, ?ello.txt)" Margin="2,2,2,2"/>
             <TextBox Width="300" x:Name="FilterFileBox" Margin="2,2,2,2"/>
-            <Button Width="100" Margin="2,2,2,2" HorizontalAlignment="Left" Click="OnSearchClick">
+            <Button Width="100" x:Name="SearchButton" Margin="2,2,2,2" HorizontalAlignment="Left" Click="OnSearchClick">
                 <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🔎 Search"/>
             </Button>
         </StackPanel>
-
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="600" />
+                <ColumnDefinition Width="61.5" />
+                <ColumnDefinition Width="538.5"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Filter Panel -->
-            <StackPanel Grid.Column="0" Margin="10">
+            <StackPanel Grid.Column="0" Margin="10,10,10,10" Grid.ColumnSpan="2">
                 <TextBlock Text="Filters (these are word filters that work line by line)" FontWeight="Bold"/>
                 <Button Content="Add Filter" Click="OnAddFilterClick" Margin="0,10,0,0"/>
                 <TreeView x:Name="FilterTree" ItemsSource="{Binding Filters}">
@@ -101,7 +124,7 @@
             </StackPanel>
 
             <!-- Results Panel -->
-            <ListView Grid.Column="1" Margin="10" x:Name="ResultsListView" ItemsSource="{Binding Occurrences}">
+            <ListView Grid.Column="2" Margin="10,10,10,10" x:Name="ResultsListView" ItemsSource="{Binding Occurrences}">
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Open File" Click="OpenFile_Click"/>

@@ -6,17 +6,19 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SuperFileSearcher
 {
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<RepoSource> RepoSources { get; } = new ObservableCollection<RepoSource>();
-        public ObservableCollection<Repo> RepoPaths { get; set; } = new ObservableCollection<Repo>();
-        public ObservableCollection<Filter> Filters { get;  } = new();
-        public ObservableCollection<Occurrence> Occurrences { get; } = new();
-        public ObservableCollection<Filter> FolderFilters { get; } = new ObservableCollection<Filter>(); // New collection for folder filters
+        public ThreadSafeObservableCollection<RepoSource> RepoSources { get; } = new();
+        public ThreadSafeObservableCollection<Repo> RepoPaths { get; set; } = new();
+        public ThreadSafeObservableCollection<Filter> Filters { get;  } = new();
+        public ThreadSafeObservableCollection<Occurrence> Occurrences { get; } = new();
+        public ThreadSafeObservableCollection<SearchTemplate> Templates { get; set; } = new();
+        public SearchTemplate SelectedTemplate { get; set; }
 
         public void LoadRepoSources()
         {
@@ -54,6 +56,15 @@ namespace SuperFileSearcher
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void DeleteTemplate(SearchTemplate template)
+        {
+            if (template != null)
+            {
+                Templates.Remove(template);
+            }
+        }
+
     }
 
     public class RepoSource

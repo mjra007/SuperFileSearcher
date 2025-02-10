@@ -34,6 +34,10 @@ namespace SuperFileSearcher
             }
         }
 
+        public Filter()
+        {
+
+        }
 
         public Filter(string searchTerm, FilterType filterType)
         {
