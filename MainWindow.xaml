@@ -7,7 +7,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="💥Super File Searcher💥" Height="Auto" Width="Auto" Icon=".\SearchFolderOpened.png">
+        Title="💥Super File Searcher💥" Height="Auto" Width="Auto" Icon="pack://application:,,,/searchfolderopened.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
