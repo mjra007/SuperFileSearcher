@@ -327,6 +327,29 @@ namespace SuperFileSearcher
                 ((MainWindowViewModel)DataContext).LoadRepoPathsFromSource(selectedSource.FilePath);
             }
         }
+        private void OnMassEditRepoPathsClick(object sender, RoutedEventArgs e)
+        {
+            string folderToAppend = MassEditFolderBox.Text.Trim();
+            if (!string.IsNullOrEmpty(folderToAppend))
+            {
+                var viewModel = (MainWindowViewModel)DataContext;
+                for (int i = 0; i < viewModel.RepoPaths.Count; i++)
+                {
+                    // Append the folder to each repo path
+                    viewModel.RepoPaths[i].RepoPath = System.IO.Path.Combine(viewModel.RepoPaths[i].RepoPath, folderToAppend);
+                }
+            }
+        }
 
+        private void OnClearAllRepoPathsClick(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to clear all repo paths?", "Confirm", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                if (DataContext is MainWindowViewModel viewModel)
+                {
+                    viewModel.RepoPaths.Clear();
+                }
+            }
+        }
     }
 }

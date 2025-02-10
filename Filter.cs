@@ -30,7 +30,7 @@ namespace SuperFileSearcher
             set
             {
                 _searchTerm = value;
-                NotifyPropertyChanged(nameof(_searchTerm));
+                NotifyPropertyChanged(nameof(SearchTerm));
             }
         }
 

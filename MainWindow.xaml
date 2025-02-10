@@ -7,7 +7,7 @@
         xmlns:emoji="clr-namespace:Emoji.Wpf;assembly=Emoji.Wpf"
         d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="💥🤪Super File Searcher🤪💥" Height="Auto" Width="Auto" Icon="Icon.ico">
+        Title="💥Super File Searcher💥" Height="Auto" Width="Auto">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -33,13 +33,25 @@
                 <Button Width="70" Margin="2,2,2,2" Click="OnRemoveRepoPathClick">
                     <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🗑️ Remove"/>
                 </Button>
+                <Button Width="100" Margin="2,2,2,2" Click="OnClearAllRepoPathsClick">
+                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="🚫 Clear All"/>
+                </Button>
             </StackPanel>
             <!-- Load Repo Paths from CSV -->
             <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
                 <ComboBox x:Name="RepoSourceComboBox" Width="300" Margin="2,2,2,2" 
                           ItemsSource="{Binding RepoSources}" DisplayMemberPath="FileName"/>
-                <Button  Width="60" Margin="2,2,2,2" Click="OnLoadRepoPathsClick">
-                     <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="📂 Load"/>
+                <Button Width="60" Margin="2,2,2,2" Click="OnLoadRepoPathsClick">
+                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="📂 Load"/>
+                </Button>
+            </StackPanel>
+
+            <!-- Mass Edit Repo Paths -->
+            <StackPanel Orientation="Horizontal" Margin="2,2,2,2">
+                <TextBox Width="300" x:Name="MassEditFolderBox" Margin="2,2,2,2" 
+                         ToolTip="Enter a folder name to append to all repo paths"/>
+                <Button Width="100" Margin="2,2,2,2" Click="OnMassEditRepoPathsClick">
+                    <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="📝 Mass Append"/>
                 </Button>
             </StackPanel>
         </StackPanel>
@@ -75,7 +87,7 @@
                                         <ComboBoxItem Content="{x:Static local:Filter+FilterType.EndsWith}"/>
                                     </ComboBox>
                                     <TextBox MinWidth="200" MaxWidth="200" Text="{Binding SearchTerm, Mode=TwoWay}" Margin="5,5,5,5"/>
-                                    <Button  Width="30" Click="OnAddChildFilterClick"  Margin="5,5,5,5">
+                                    <Button Width="30" Click="OnAddChildFilterClick"  Margin="5,5,5,5">
                                         <emoji:TextBlock Margin="2 0" ColorBlend="True" Text="➕"/>
                                     </Button>
                                     <Button Width="30" Click="OnDeleteChildFilterClick"  Margin="5,5,5,5">

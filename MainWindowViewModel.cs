@@ -13,9 +13,10 @@ namespace SuperFileSearcher
     internal class MainWindowViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<RepoSource> RepoSources { get; } = new ObservableCollection<RepoSource>();
-        public ObservableCollection<Repo> RepoPaths { get; } = new ObservableCollection<Repo>();
+        public ObservableCollection<Repo> RepoPaths { get; set; } = new ObservableCollection<Repo>();
         public ObservableCollection<Filter> Filters { get;  } = new();
         public ObservableCollection<Occurrence> Occurrences { get; } = new();
+        public ObservableCollection<Filter> FolderFilters { get; } = new ObservableCollection<Filter>(); // New collection for folder filters
 
         public void LoadRepoSources()
         {
@@ -39,7 +40,9 @@ namespace SuperFileSearcher
                 {
                     if (!string.IsNullOrWhiteSpace(line))
                     {
-                        RepoPaths.Add(new Repo(line.Trim()));
+                        string value = line.Trim();
+                        value = value.Replace("{ODATE}", DateTime.Today.ToString("dd-MM-yyyy"));
+                        RepoPaths.Add(new Repo(value));
                     }
                 }
             }
