@@ -41,14 +41,14 @@ namespace SuperFileSearcher
         }
 
         public Repo() {
-            _RepoPath=string.Empty;
-            _AppendedFolder = string.Empty;
+            RepoPath = string.Empty;
+            AppendedFolder = string.Empty;
         }
 
         public Repo(string path)
         {
-            _RepoPath = string.Empty;
-            _AppendedFolder = string.Empty;
+            RepoPath = path;
+            AppendedFolder = string.Empty;
         }
 
         public IEnumerable<File> GetFiles(string searchPattern)
